@@ -1,0 +1,5 @@
+[project]
+name = "sales-report-cli"
+version = "0.1.0"
+description = "Advanced sales report generator"
+requires-python = ">=3.10"
