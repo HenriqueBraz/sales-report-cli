@@ -7,3 +7,13 @@ name = "sales-report-cli"
 version = "0.1.0"
 description = "Advanced sales report generator"
 requires-python = ">=3.10"
+
+[project.scripts]
+vendas-cli = "sales_report.cli:main"
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
