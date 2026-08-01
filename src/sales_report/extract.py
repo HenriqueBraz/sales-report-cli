@@ -10,14 +10,30 @@ class Extractor:
         self.file = file
 
     def csv_extract(self) -> list[dict]:
-        logger.info(f"Reading CSV file: {self.file}")
         try:
-            with open(self.file, mode="r", encoding="latin1") as file:
-                reader = csv.DictReader(file)
-                sales = list(reader)
-            logger.info(f"Loaded {len(sales)} sales")
-            return sales
+            logger.info(f"Reading CSV file: {self.file}")
+            for encoding in ("utf-8", "latin-1", "cp1252"):
+                try:
+                    with open(self.file, mode="r", encoding=encoding) as file:
+                        reader = csv.DictReader(file)
+                        sales = list(reader)
+
+                    logger.info(
+                        f"Loaded {len(sales)} sales using '{encoding}' encoding"
+                    )
+                    return sales
+
+                except UnicodeDecodeError:
+                    logger.warning(
+                        f"Failed to decode with '{encoding}'. Trying next encoding..."
+                    )
+
         except FileNotFoundError:
             logger.error(f"File not found: {self.file}")
-        except Exception as e:
-            logger.error(f"An error occurred while reading the CSV file: {e}")
+            raise
+
+        except Exception:
+            logger.exception("Unexpected error while reading CSV file")
+            raise
+
+        logger.error("Unable to decode CSV file with supported encodings.")

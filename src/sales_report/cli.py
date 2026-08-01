@@ -20,6 +20,8 @@ def main():
     )
     parser.add_argument("file", type=Path, help="Path to file containing sales data")
     parser.add_argument("--format", choices=["text", "json"], default="text")
+    parser.add_argument("--start", type=str, help="Start date (YYYY-MM-DD)")
+    parser.add_argument("--end", type=str, help="End date (YYYY-MM-DD)")
     args = parser.parse_args()
     file = Path(args.file)
 
@@ -32,6 +34,11 @@ def main():
         logger.error(f"Unsupported file type: {file_type}")
 
     transformer = Transformer(sales_data)
+    print(sales_data)
+
+    if args.start or args.end:
+        sales_data = transformer.filter_by_date(start=args.start, end=args.end)
+        transformer = Transformer(sales_data)
 
     total_sales_by_product = transformer.total_sales_by_product()
 

@@ -1,5 +1,6 @@
 import logging
 from typing import Any
+from datetime import datetime
 
 logger = logging.getLogger(__name__)
 
@@ -9,6 +10,26 @@ class Transformer:
         logger.info("Initializing sales transformer")
         self.sales = sales
         self._product_totals = self._calculate_product_totals()
+
+    def filter_by_date(self, start: str | None, end: str | None) -> list[dict]:
+        logger.info("Filtering sales between %s and %s", start, end)
+        start_date = datetime.strptime(start, "%Y-%m-%d").date() if start else None
+        end_date = datetime.strptime(end, "%Y-%m-%d").date() if end else None
+        filtered_sales = []
+        for sale in self.sales:
+            sale_date = datetime.strptime(
+                sale["data"],
+                "%Y-%m-%d",
+            ).date()
+            if start_date and sale_date < start_date:
+                continue
+
+            if end_date and sale_date > end_date:
+                continue
+
+            filtered_sales.append(sale)
+        logger.info("Filtered %d of %d sales", len(filtered_sales), len(self.sales))
+        return filtered_sales
 
     def _calculate_product_totals(self) -> list[dict[str, Any]]:
         logger.info("Calculating product totals")
