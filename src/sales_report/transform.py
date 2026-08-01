@@ -17,10 +17,15 @@ class Transformer:
             product = next((p for p in totals if p["produto"] == sale["produto"]), None)
             if product:
                 product["quantidade"] += int(sale["quantidade"])
+                product["total_vendas"] += int(sale["quantidade"]) * float(
+                    sale["preco_unitario"]
+                )
             else:
                 new_product = {
                     "produto": sale["produto"],
                     "quantidade": int(sale["quantidade"]),
+                    "total_vendas": int(sale["quantidade"])
+                    * float(sale["preco_unitario"]),
                 }
                 totals.append(new_product)
 

@@ -4,6 +4,7 @@ from pathlib import Path
 
 from .extract import Extractor
 from .transform import Transformer
+from .presenter import Presenter
 
 
 def main():
@@ -17,8 +18,8 @@ def main():
     parser = argparse.ArgumentParser(
         prog="sales_report", description=" a advanced sales report generator"
     )
-
     parser.add_argument("file", type=Path, help="Path to file containing sales data")
+    parser.add_argument("--format", choices=["text", "json"], default="text")
     args = parser.parse_args()
     file = Path(args.file)
 
@@ -30,24 +31,24 @@ def main():
     else:
         logger.error(f"Unsupported file type: {file_type}")
 
-    print()
-    print("Sales data:")
-    print(sales_data)
-    print()
-
     transformer = Transformer(sales_data)
 
-    print("Total sales by product:")
     total_sales_by_product = transformer.total_sales_by_product()
-    print(total_sales_by_product)
 
-    print("Total sales value:")
     total_sales_value = transformer.total_sales_value()
-    print(total_sales_value)
 
-    print("Most sold product:")
     most_sold_product = transformer.most_sold_product()
-    print(most_sold_product)
+
+    presenter = Presenter(
+        total_sales_by_product=total_sales_by_product,
+        total_sales_value=total_sales_value,
+        most_sold_product=most_sold_product,
+    )
+
+    if args.format == "json":
+        print(presenter.to_json())
+    else:
+        print(presenter.to_text())
 
 
 if __name__ == "__main__":
