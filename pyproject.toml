@@ -20,5 +20,19 @@ where = ["src"]
 [project.optional-dependencies]
 dev = [
     "pytest>=8.0",
+    "pytest-cov>=7.0",
 ]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]
+addopts = "-ra"
+
+[tool.coverage.run]
+source = ["src/sales_report"]
+branch = true
+
+[tool.coverage.report]
+show_missing = true
+skip_covered = false
 

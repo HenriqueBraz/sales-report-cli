@@ -8,10 +8,10 @@ from .presenter import Presenter
 logger = logging.getLogger(__name__)
 
 
-def main():
+def main(argv=None):
 
     parser = argparse.ArgumentParser(
-        prog="sales_report", description=" a advanced sales report generator"
+        prog="sales_report", description=" A advanced sales report generator"
     )
     parser.add_argument("file", type=Path, help="Path to file containing sales data")
     parser.add_argument(
@@ -23,7 +23,7 @@ def main():
     )
     parser.add_argument("-s", "--start", type=str, help="Start date (YYYY-MM-DD)")
     parser.add_argument("-e", "--end", type=str, help="End date (YYYY-MM-DD)")
-    args = parser.parse_args()
+    args = parser.parse_args(argv)
     file = Path(args.file)
 
     extractor = Extractor(file)
