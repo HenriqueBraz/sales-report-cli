@@ -33,24 +33,23 @@ class Transformer:
 
     def _calculate_product_totals(self) -> list[dict[str, Any]]:
         logger.info("Calculating product totals")
-        totals: list[dict[str, Any]] = []
+        totals: dict[str, dict[str, Any]] = {}
         for sale in self.sales:
-            product = next((p for p in totals if p["produto"] == sale["produto"]), None)
-            if product:
-                product["quantidade"] += int(sale["quantidade"])
-                product["total_vendas"] += int(sale["quantidade"]) * float(
-                    sale["preco_unitario"]
-                )
-            else:
-                new_product = {
-                    "produto": sale["produto"],
-                    "quantidade": int(sale["quantidade"]),
-                    "total_vendas": int(sale["quantidade"])
-                    * float(sale["preco_unitario"]),
-                }
-                totals.append(new_product)
+            product = sale["produto"]
+            quantity = int(sale["quantidade"])
+            total = quantity * float(sale["preco_unitario"])
 
-        return totals
+            if product not in totals:
+                totals[product] = {
+                    "produto": product,
+                    "quantidade": quantity,
+                    "total_vendas": total,
+                }
+            else:
+                totals[product]["quantidade"] += quantity
+                totals[product]["total_vendas"] += total
+
+        return list(totals.values())
 
     def total_sales_by_product(self) -> list[dict[str, Any]]:
         logger.info("Returning total sales by product")

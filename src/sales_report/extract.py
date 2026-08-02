@@ -24,7 +24,7 @@ class Extractor:
                     return sales
 
                 except UnicodeDecodeError:
-                    logger.warning(
+                    logger.debug(
                         f"Failed to decode with '{encoding}'. Trying next encoding..."
                     )
 
