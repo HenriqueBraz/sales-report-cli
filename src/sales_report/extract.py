@@ -37,3 +37,4 @@ class Extractor:
             raise
 
         logger.error("Unable to decode CSV file with supported encodings.")
+        raise ValueError("Unsupported file encoding.")
