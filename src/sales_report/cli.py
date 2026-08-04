@@ -11,7 +11,7 @@ logger = logging.getLogger(__name__)
 def main(argv=None):
 
     parser = argparse.ArgumentParser(
-        prog="sales_report", description=" A advanced sales report generator"
+        prog="vendas-cli", description=" A advanced sales report generator"
     )
     parser.add_argument("file", type=Path, help="Path to file containing sales data")
     parser.add_argument(

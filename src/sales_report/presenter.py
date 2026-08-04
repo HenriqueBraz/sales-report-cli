@@ -18,6 +18,8 @@ class Presenter:
 
     def to_text(self) -> str:
         logger.info("Generating text report")
+        if not self.total_sales_by_product:
+            return "No sales found for the selected period."
         report = "============\n\n"
         report += "Sales Report\n"
         report += "============\n\n"
@@ -30,6 +32,15 @@ class Presenter:
 
     def to_json(self) -> str:
         logger.info("Generating JSON report")
+        if not self.total_sales_by_product:
+            report = {
+                "message": "No sales found for the selected period.",
+                "total_sales_by_product": [],
+                "total_sales_value": 0,
+                "most_sold_product": None,
+            }
+
+            return json.dumps(report, indent=4, ensure_ascii=False)
         report = {
             "total_sales_by_product": self.total_sales_by_product,
             "total_sales_value": self.total_sales_value,
