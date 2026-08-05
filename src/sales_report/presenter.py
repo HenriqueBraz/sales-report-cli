@@ -14,7 +14,7 @@ class Presenter:
 
         self.total_sales_by_product = total_sales_by_product
         self.total_sales_value = total_sales_value
-        self.most_sold_product = most_sold_product #lista
+        self.most_sold_product = most_sold_product  # lista
 
     def to_text(self) -> str:
         logger.info("Generating text report")
@@ -28,7 +28,7 @@ class Presenter:
             report += f"- {product['produto']}: ${product['total_vendas']:.2f}\n"
         report += f"\nTotal Sales Value: ${self.total_sales_value:.2f}\n"
         for product in self.most_sold_product:
-            report += (f"Most Sold Product: {product['produto']} ({int(product['quantidade'])} units)\n")
+            report += f"Most Sold Product: {product['produto']} ({int(product['quantidade'])} units)\n"
         return report
 
     def to_json(self) -> str:

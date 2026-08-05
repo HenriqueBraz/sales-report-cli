@@ -68,11 +68,14 @@ class Transformer:
         logger.info("Retrieving most sold product")
         if not self._product_totals:
             return [{}]
-       
+
         most_sold = max(self._product_totals, key=lambda p: p["quantidade"])
         most_solds = [most_sold]
         for product in self._product_totals:
-            if product["quantidade"] == most_sold["quantidade"] and most_sold['produto'] != product['produto']:
+            if (
+                product["quantidade"] == most_sold["quantidade"]
+                and most_sold["produto"] != product["produto"]
+            ):
                 most_solds.append(product)
                 break
 
