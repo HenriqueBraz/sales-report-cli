@@ -76,5 +76,4 @@ class Transformer:
                 most_solds.append(product)
                 break
 
-        print(f"most_sold_product: {most_solds}") 
         return most_solds
