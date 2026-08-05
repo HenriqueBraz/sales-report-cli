@@ -1,5 +1,11 @@
-produto,quantidade,preco_unitario,data
-Camiseta,3,49.9,2025-01-10
-Cal�a,2,99.9,2025-02-15
-Camiseta,1,49.9,2025-03-20
-T�nis,1,199.9,2025-04-02
+data,produto,quantidade,preco_unitario
+2026-02-01,Camiseta,3,49.90
+2026-02-03,Calça,4,129.90
+2026-02-05,Tênis,1,299.90
+2026-02-08,Camiseta,2,49.90
+2026-02-10,Calça,2,129.90
+2026-02-12,Camiseta,1,49.90
+2026-02-15,Boné,4,39.90
+2026-02-18,Boné,1,39.90
+2026-02-18,Cinto,1,10.90
+2026-02-18,Cinto,1,10.90

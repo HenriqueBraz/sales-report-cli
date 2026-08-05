@@ -64,9 +64,17 @@ class Transformer:
             total += float(sale["preco_unitario"]) * int(sale["quantidade"])
         return total
 
-    def most_sold_product(self) -> dict[str, Any]:
+    def most_sold_product(self) -> list[dict[str, Any]]:
         logger.info("Retrieving most sold product")
         if not self._product_totals:
-            return {}
+            return [{}]
+       
         most_sold = max(self._product_totals, key=lambda p: p["quantidade"])
-        return most_sold
+        most_solds = [most_sold]
+        for product in self._product_totals:
+            if product["quantidade"] == most_sold["quantidade"] and most_sold['produto'] != product['produto']:
+                most_solds.append(product)
+                break
+
+        print(f"most_sold_product: {most_solds}") 
+        return most_solds
